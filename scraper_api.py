@@ -20,14 +20,36 @@ headers = {
     "Accept-Encoding": "gzip, deflate",
     "Connection": "keep-alive",
 }
+timestamp = time.time()
+
+def capture_screenshot(url, filename="error_screenshot.png", proxy=None):
+    try:
+        options = Options()
+        options.add_argument("--headless")
+        options.add_argument("--disable-gpu")
+        # if proxy:
+        #     options.add_argument(f'--proxy-server={proxy}')
+        
+        driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=options)
+        driver.get(url)
+        time.sleep(2)
+        screenshot = driver.get_screenshot_as_png()
+        driver.quit()
+        image = Image.open(BytesIO(screenshot))
+        image.save(filename)
+    except Exception as e:
+        print(f"Failed to capture screenshot: {e}")
+
 
 def get_html_with_requests(url, proxy=None):
     try:
         proxies = {"http": proxy, "https": proxy} if proxy else None
         response = requests.get(url, proxies=proxies, timeout=10, headers=headers)
         response.raise_for_status()
+        capture_screenshot(url, filename=f"{timestamp}_error.png", proxy=proxy)
         return response.text
     except Exception as e:
+        capture_screenshot(url, filename=f"{timestamp}_error.png", proxy=proxy)
         raise RuntimeError(f"Requests failed: {e}")
 
 def get_html_with_cloudscraper(url, proxy=None):
@@ -115,5 +137,5 @@ def scrape():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, host="0.0.0.0", port=8080)
 
