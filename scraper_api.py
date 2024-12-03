@@ -102,8 +102,8 @@ async def get_html_with_puppeteer(url, proxy=None):
 
 def scrape_url(url, proxy=None):
     methods = [
-        get_html_with_selenium,
         get_html_with_puppeteer,
+        get_html_with_selenium,
         get_html_with_requests,
         get_html_with_cloudscraper,
 
