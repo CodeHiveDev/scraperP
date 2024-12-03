@@ -30,7 +30,7 @@ def capture_screenshot(url, filename="error_screenshot.png", proxy=None):
         # if proxy:
         #     options.add_argument(f'--proxy-server={proxy}')
         
-        driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=options)
+        driver = webdriver.Chrome(service=Service("/usr/local/bin/chromedriver"), options=options)
         driver.get(url)
         time.sleep(2)
         screenshot = driver.get_screenshot_as_png()
@@ -72,7 +72,7 @@ def get_html_with_selenium(url, proxy=None):
         if proxy:
             options.add_argument(f'--proxy-server={proxy}')
         
-        driver = webdriver.Chrome(service=Service("chromedriver"), options=options)
+        driver = webdriver.Chrome(service=Service("/usr/local/bin/chromedriver"), options=options)
         driver.get(url)
         time.sleep(2)
         html = driver.page_source
