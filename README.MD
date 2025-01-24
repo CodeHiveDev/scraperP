@@ -16,3 +16,12 @@ az webapp create --resource-group FlaskResourceGroup --plan FlaskAppPlan --name 
 
 
 az webapp deploy --resource-group FlaskResourceGroup --name FlaskWebPulpoulApp --src-path scraper_api.zip
+
+
+
+curl --location 'http://localhost:8080/scrape' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "url":"https://www.fravega.com/p/heladera-ciclica-drean-277lts-hdr280f00b-blanco-160879/",
+    "proxy":"https://sp11k0ggf4:2jTgk6n2d8qgxLSr+R@dc.smartproxy.com:10000"
+}'
