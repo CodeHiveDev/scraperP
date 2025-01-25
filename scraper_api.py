@@ -136,7 +136,7 @@ async def scrape_with_playwright(url, proxy=None):
     except Exception as e:
         raise RuntimeError(f"Playwright failed: {e}")
     
-def get_html_with_selenium(url, proxy=None):
+async def get_html_with_selenium(url, proxy=None):
     driver = None  # Inicializa el driver como None
     try:
 
@@ -145,10 +145,7 @@ def get_html_with_selenium(url, proxy=None):
         time.sleep(2)
         html = driver.page_source
         print("HTML====",html)
-        driver.quit()
-
-  
-        return html
+        return await driver.page_source
     except Exception as e:
         raise RuntimeError(f"Selenium failed: {e}")
     finally:
