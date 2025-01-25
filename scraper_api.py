@@ -11,6 +11,7 @@ import asyncio
 from pyppeteer import launch
 import requests
 from playwright.async_api import async_playwright
+from webdriver_manager.chrome import ChromeDriverManager
 
 app = Flask(__name__)
 
@@ -57,8 +58,10 @@ def setup_driver():
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
-
-    driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=options)
+    
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    #driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=options)
+   
     driver.execute_cdp_cmd(
         "Page.addScriptToEvaluateOnNewDocument",
         {
@@ -172,7 +175,7 @@ def scrape_url(url, proxy=None):
     methods = [
         #get_html_with_cloudscraper,
         #get_html_with_puppeteer,
-        scrape_with_playwright,
+        #scrape_with_playwright,
         get_html_with_selenium,
         #get_html_with_requests,
         
@@ -188,6 +191,7 @@ def scrape_url(url, proxy=None):
                 html = asyncio.run(method(url, proxy=proxy))
 
             print(f"Successfully scraped with {method.__name__}")
+            
             return html
         except Exception as e:
             print(e)
