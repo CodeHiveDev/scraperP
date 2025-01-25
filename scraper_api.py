@@ -144,7 +144,9 @@ def get_html_with_selenium(url, proxy=None):
         driver.get(url)
         time.sleep(2)
         html = driver.page_source
+        print("HTML====",html)
         driver.quit()
+
   
         return html
     except Exception as e:
