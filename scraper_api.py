@@ -58,7 +58,7 @@ def setup_driver():
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
-    
+    options.add_argument(f"--proxy-server=http://sp11k0ggf4:2jTgk6n2d8qgxLSr+R@dc.smartproxy.com:10000")
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     #driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=options)
    
