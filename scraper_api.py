@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from selenium import webdriver
+# from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
@@ -12,6 +12,7 @@ from pyppeteer import launch
 import requests
 from playwright.async_api import async_playwright
 from webdriver_manager.chrome import ChromeDriverManager
+from seleniumwire import webdriver
 
 app = Flask(__name__)
 
@@ -59,7 +60,16 @@ def setup_driver():
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
     options.add_argument(f"--proxy-server=http://sp11k0ggf4:2jTgk6n2d8qgxLSr+R@dc.smartproxy.com:10000")
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
+    options2 = {
+    'proxy': {
+        'http': 'http://sp11k0ggf4:2jTgk6n2d8qgxLSr+R@dc.smartproxy.com:10000', 
+        'https': 'http://sp11k0ggf4:2jTgk6n2d8qgxLSr+R@dc.smartproxy.com:10000',
+        'no_proxy': 'localhost,127.0.0.1' # excludes
+    }
+}
+
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), seleniumwire_options=options2)
     #driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=options)
    
     driver.execute_cdp_cmd(
