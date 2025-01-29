@@ -13,9 +13,10 @@ import requests
 from playwright.async_api import async_playwright
 from webdriver_manager.chrome import ChromeDriverManager
 from seleniumwire import webdriver
+import tempfile
 
 app = Flask(__name__)
-
+user_data_dir = tempfile.mkdtemp()
 # Encabezados simulando un motor de búsqueda
 headers = {
     "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
@@ -66,8 +67,12 @@ def setup_driver():
         'http': 'http://sp11k0ggf4:2jTgk6n2d8qgxLSr+R@dc.smartproxy.com:10000', 
         'https': 'http://sp11k0ggf4:2jTgk6n2d8qgxLSr+R@dc.smartproxy.com:10000',
         'no_proxy': 'localhost,127.0.0.1' # excludes
-    }
+    },
+    'user_data_dir': user_data_dir,  # Establece un directorio único
+    'disable_encoding': True,  # Desactiva la compresión de respuestas
+    'verify_ssl': False,  # Deshabilita la verificación SSL
 }
+
 
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), seleniumwire_options=options2)
     #driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=options)
