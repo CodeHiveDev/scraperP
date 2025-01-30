@@ -73,7 +73,7 @@ def setup_driver():
 }
 
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options,seleniumwire_options=options2)
+    driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=options,seleniumwire_options=options2)
     #driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=options)
    
     driver.execute_cdp_cmd(
@@ -86,6 +86,7 @@ def setup_driver():
             """
         },
     )
+
     return driver
 
 
@@ -158,7 +159,6 @@ async def get_html_with_selenium(url, proxy=None):
         driver.get(url)
         time.sleep(2)
         html = driver.page_source
-        print("HTML====",html)
         return driver.page_source
     except Exception as e:
         raise RuntimeError(f"Selenium failed: {e}")
