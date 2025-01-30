@@ -158,7 +158,6 @@ async def get_html_with_selenium(url, proxy=None):
         driver = setup_driver()
         driver.get(url)
         time.sleep(2)
-        html = driver.page_source
         return driver.page_source
     except Exception as e:
         raise RuntimeError(f"Selenium failed: {e}")
