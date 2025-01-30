@@ -73,7 +73,7 @@ def setup_driver():
 }
 
 
-    driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=options,seleniumwire_options=options2)
+    driver = webdriver.Chrome(service=Service("/home/azureuser/.cache/selenium/chromedriver/linux64/132.0.6834.110/chromedriver"), options=options,seleniumwire_options=options2)
     #driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=options)
    
     driver.execute_cdp_cmd(
